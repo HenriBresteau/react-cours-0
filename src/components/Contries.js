@@ -6,6 +6,7 @@ const Contries = () => {
   const [data, setData] = useState([]);
   const [sortedData, setSortedData] = useState([]);
   const [playOnce, setPlayOne] = useState(true);
+  const [rangeValue, setRangeValue] = useState(40);
 
   useEffect(() => {
     if (playOnce) {
@@ -24,13 +25,16 @@ const Contries = () => {
       const sortedArray = countryObj.sort((a, b) => {
         return b.population - a.population;
       });
-      sortedArray.length = 30;
+      sortedArray.length = rangeValue;
       setSortedData(sortedArray);
     };
     sortedCountry();
-  }, [data, playOnce]);
+  }, [data, rangeValue, playOnce]);
   return (
-    <div className="countries">
+      <div className="countries">
+          <div className="sort-container">
+              <input type="range" min="1" max="250" value={rangeValue} onChange={(e)=> setRangeValue(e.target.value)} />
+          </div>
       <ul className="countries-list">
         {sortedData.map((country) => (
           <Card country={country} key={country.name}></Card>
