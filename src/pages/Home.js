@@ -1,3 +1,4 @@
+import Contries from "../components/Contries";
 import Logo from "../components/Logo";
 import Navigation from "../components/Navigation";
 
@@ -6,7 +7,7 @@ const Home = () => {
     <div className="home">
       <Navigation></Navigation>
       <Logo></Logo>
-      <h1>Accueil</h1>
+      <Contries></Contries>
     </div>
   );
 };
