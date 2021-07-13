@@ -15,12 +15,16 @@ const News = () => {
       .get("http://localhost:3003/articles")
       .then((res) => setNewsData(res.data));
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+  };
   return (
     <div className="news-container">
       <Navigation></Navigation>
       <Logo></Logo>
       <h1>News</h1>
-      <form action="">
+      <form onSubmit={(e) => handleSubmit(e)}>
         <input type="text" placeholder="Nom" />
         <textarea placeholder="Messsage"></textarea>
         <input type="submit" value="Envoyer" />
