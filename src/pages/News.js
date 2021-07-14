@@ -8,6 +8,7 @@ const News = () => {
   const [newsData, setNewsData] = useState([]);
   const [author, setauthor] = useState("");
   const [content, setContent] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getData();
@@ -20,17 +21,23 @@ const News = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit");
-    axios
-      .post("http://localhost:3003/articles", {
-        author,
-        content,
-        date: Date.now(),
-      })
-      .then(() => {
-        setauthor("");
-        setContent("");
-        getData();
-      });
+
+    if (content.length < 140) {
+      setError(true);
+    } else {
+      axios
+        .post("http://localhost:3003/articles", {
+          author,
+          content,
+          date: Date.now(),
+        })
+        .then(() => {
+          setError(false);
+          setauthor("");
+          setContent("");
+          getData();
+        });
+    }
   };
   return (
     <div className="news-container">
@@ -45,10 +52,12 @@ const News = () => {
           value={author}
         />
         <textarea
+          style={{ border: error ? "1px solid red" : "1px solid #61dafb" }}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Messsage"
           value={content}
         ></textarea>
+        {error && <p>Veuillez écricre un minimum de 140 caratères</p>}
         <input type="submit" value="Envoyer" />
       </form>
       <ul>
