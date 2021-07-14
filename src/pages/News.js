@@ -6,6 +6,8 @@ import Navigation from "../components/Navigation";
 
 const News = () => {
   const [newsData, setNewsData] = useState([]);
+  const [author, setauthor] = useState("");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     getData();
@@ -18,6 +20,17 @@ const News = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit");
+    axios
+      .post("http://localhost:3003/articles", {
+        author,
+        content,
+        date: Date.now(),
+      })
+      .then(() => {
+        setauthor("");
+        setContent("");
+        getData();
+      });
   };
   return (
     <div className="news-container">
@@ -25,8 +38,17 @@ const News = () => {
       <Logo></Logo>
       <h1>News</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" placeholder="Nom" />
-        <textarea placeholder="Messsage"></textarea>
+        <input
+          onChange={(e) => setauthor(e.target.value)}
+          type="text"
+          placeholder="Nom"
+          value={author}
+        />
+        <textarea
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Messsage"
+          value={content}
+        ></textarea>
         <input type="submit" value="Envoyer" />
       </form>
       <ul>
