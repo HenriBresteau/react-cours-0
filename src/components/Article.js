@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import DeleteArticles from "./DeleteArticles";
 
 const Article = ({ article }) => {
   const [isEditing, setisEditing] = useState(false);
@@ -44,11 +45,15 @@ const Article = ({ article }) => {
       )}
       <div className="btn-container">
         {isEditing ? (
-          <button onClick={handleEdit}>Valider</button>
+          <button onClick={handleEdit} className="btn-validate">
+            Valider
+          </button>
         ) : (
-          <button onClick={() => setisEditing(true)}>Edit</button>
+          <button onClick={() => setisEditing(true)} className="btn-edit">
+            Edit
+          </button>
         )}
-        <button>Delete</button>
+        <DeleteArticles id={article.id}></DeleteArticles>
       </div>
     </div>
   );
